@@ -1,0 +1,22 @@
+// Place all the styles related to the students controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.course_student_list {
+  // display: inline-flex;
+  width: 50%;
+}
+.cutom_row {
+  margin-left: -11px;
+}
+
+#page-wrapper {
+  min-height: 600px;
+}
+
+.team-wise-student:hover {
+  cursor: pointer;
+}
+.team-wise-student>.panel-heading:hover {
+  background-color: #428bca;
+  color: #fff;
+}

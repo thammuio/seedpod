@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="span6 offset3">
+<h1> Your Courses</h1>
+<ol>
+
+<% @team.each do |t| %>
+  <% if current_user.id == t.user_id %>
+    <% @student_courses.each do |s| %>
+      <% if s.team_id == t.id %>
+        <li>
+          <a href= '#'>
+            <%= s.course_name %><br>
+          </a><br/>
+          <ul>
+          <li><%= link_to t.name, report_path %></li> </ul>
+        </li><br/>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

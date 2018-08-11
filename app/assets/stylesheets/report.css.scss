@@ -1,0 +1,12 @@
+// Place all the styles related to the report controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.report:hover {
+  cursor: pointer;
+}
+
+.panel-default>.panel-heading:hover{
+  background-color: #428bca;
+  color: #fff;
+}

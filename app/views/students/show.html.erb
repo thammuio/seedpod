@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h3 class="page-header" style="text-align: center;">Student Detail
+    </h3>
+  </div>
+</div>
+
+<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-lg-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="col-lg-12">
+          <div class="form-group">
+            <label>Email :</label>
+            <%= @student.email %>
+          </div>
+          <div class="form-group">
+            <label>Address :</label>
+            <%= @student.address %>
+          </div>
+          <div class="form-group">
+            <label>Mobile Number :</label>
+            <%= @student.mobile_no %>
+          </div>
+          <div class="form-group">
+            <label>Student Name :</label>
+            <%= @student.student_name %>
+          </div>
+          <div class="form-group">
+            <label>Description :</label>
+            <div style="text-align: justify;"><%= @plan.body %></div>
+          </div>
+          <%= link_to "Back", :back, :class=>"btn btn-default" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

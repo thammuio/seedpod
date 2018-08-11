@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h2 class="page-header"><%= @report.title %></h2>
+  </div>
+</div>
+
+<%= form_for @submitted_report,  url: :create_submitted_report, :html => { :id => "submitted_report_form" } do |f| %>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table" id="tb">
+              <thead>
+                <tr>
+                  <th style="width: 300px;">Userstory</th>
+                  <th style="width: 300px;">Task</th>
+                  <th style="width: 200px;">Days worked</th>
+                  <th style="width: 200px;">Userstory task assigned to</th>
+                  <th style="width: 200px;">Report Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= f.fields_for :submitted_report_details do |report_detail| %>
+                  <%= render "submitted_report_detail_fields", :f => report_detail %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= f.submit "Submit Report", :class => "btn btn-primary btn-sm" %>
+  <%= link_to_add_fields "Add More", f, :submitted_report_details %>
+<% end %>

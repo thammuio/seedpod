@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h3 class="page-header">
+      <small>
+        <button type="button" class="btn btn-default btn-circle"><i class="fa fa-check"></i></button>
+        Approved
+      </small> <%= @waiting_to_approve.title %>
+    </h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-1">
+  </div>
+  <div class="col-lg-10">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Userstory</th>
+                <th>Task</th>
+                <th>Total hours spent</th>
+                <th>Userstory task assigned to</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @submitted_report_details.each do |pd| %>
+                <tr>
+                  <td>
+                    <% @userstory.each do |u| %>
+                      <% if u.id == pd.userstory_id %>
+                        <%= u.title %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% @tasks.each do |t| %>
+                      <% if t.id == pd.task_id %>
+                        <%= t.title %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= pd.time_worked %>
+                  </td>
+                  <td>
+                    <% @report.teams.each do |report_team| %>
+                      <% report_team.students.each do |team_students| %>
+                        <% if pd.userstory_task_assigned_to == team_students.id %>
+                          <%= team_students.student_name %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <% @waiting_to_approve.productivity_report_teams.each do |report_team| %>
+          <% unless report_team.status == "Approved" %>
+            <div class="row">
+              <div class="col-sm-6">
+              </div>
+              <div class="col-sm-6">
+                <div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
+                  <a href="<%= resend_pending_report_path(@student_course.id, @report.title) %>" class="btn btn-danger">Resend</a>
+                  <a href="<%= approve_pending_report_path(@student_course.id, @report.title) %>" class="btn btn-success">Approve</a>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h3 class="page-header" style="text-align: center;"><%= @userstory.title.upcase %></h3>
+    <%= link_to "Back", :back, :class => "btn btn-primary pull-right" %>
+  </div>
+</div>
+
+<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-lg-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="col-lg-12">
+          <div class="form-group frozenstory">
+            <label>Title</label> :
+            <%= @userstory.title %>
+          </div>
+          <div class="form-group frozenstory">
+            <label>Description</label> :
+            <div style="text-align: justify;"><%= @userstory.description %></div>
+          </div>
+          <div class="form-group frozenstory">
+            <label>Estimate</label> :
+            <%= @userstory.estimate %>
+          </div>
+          <div class="form-group frozenstory">
+            <label>Priority</label> :
+            <%= @userstory.priority %>
+          </div>
+          <div class="form-group frozenstory">
+            <label>Status</label> :
+            <%= @userstory.status %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

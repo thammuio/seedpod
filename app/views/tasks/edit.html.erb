@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h4 class="page-header"> <i class="fa fa-hand-o-right"></i> Edit task
+    <%= link_to "All Tasks", :back, :class => "pull-right btn btn-outline btn-success btn-xs" %>
+    </h4>
+  </div>
+</div>
+
+<%= form_for(@task, :url => update_task_path, :html => { :id => "new_task"}) do |f| %>
+  <% if @task.errors.any? %>
+    <script type="text/javascript">
+      $('label').addClass('error');
+    </script>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :title %><br>
+    <%= f.text_field :title, :class => "form-control", :required => true %>
+    <%= @task.errors.messages[:title].join(" ") %>
+  </div>
+  <div class="form-group">
+    <%= f.label :description %><br>
+    <%= f.text_area :description, :class => "form-control", :rows => 3, :required => true %>
+    <%= @task.errors.messages[:description].join(" ") %>
+  </div>
+  <div class="form-group">
+    <label><%= f.label :estimate %></label>
+    <%= f.select(:estimate, Task::TaskEstimate, { :include_blank=> "Select estimate" }, { :class=>"form-control", :required => true }) %>
+    <%= @task.errors.messages[:estimate].join(" ") %>
+  </div>
+  <div class="form-group">
+    <label><%= f.label :priority %></label>
+    <%= f.select(:priority, Task::TaskPriority, { :include_blank=> "Set priority" }, { :class=>"form-control" , :required => true }) %>
+    <%= @task.errors.messages[:priority].join(" ") %>
+  </div>
+  <div class="actions">
+    <% if params[:controller] == "tasks" && params[:action] == "new" %>
+      <%= f.submit 'Create Task', :class => "btn btn-primary" %>
+      <%= link_to "Back", :back, :class=>"btn btn-default" %>
+    <% elsif params[:controller] == "tasks" && params[:action] == "edit" %>
+      <%= f.submit 'Update Task', :class => "btn btn-primary" %>
+      <%= link_to "Back", :back, :class=>"btn btn-default" %>
+    <% end %>
+  </div>
+<% end %>
+
+<style type="text/css">
+  .error {
+    border: 1px solid red;
+  }
+</style>
+<script type="text/javascript">
+  $("#new_task").validate();
+</script>

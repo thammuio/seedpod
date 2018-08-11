@@ -1,0 +1,15 @@
+<% if @tasks.count > 0 %>
+  var str = [];
+  <% @tasks.each do |p| %>
+    str.push('<option value="<%= p.id %>"><%= p.title %></option>');
+  <% end %>
+  $("#tsk-<%= @d[1] %>").removeProp('disabled');
+  $('#tsk-<%= @d[1] %>').html('<option value="">Please select</option>' + str);
+  makeEnable();
+<% else %>
+  $('#tsk-<%= @d[1] %>').html('<option value="">No task to display</option>');
+<% end %>
+
+function makeEnable(){
+  document.getElementById("#tsk-<%= @d %>").disabled = false;
+}

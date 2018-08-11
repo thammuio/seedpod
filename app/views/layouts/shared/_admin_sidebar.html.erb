@@ -1,0 +1,20 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+  <div class="sidebar-collapse">
+    <ul class="nav" id="side-menu">
+      <li>
+        <a href="/admin"><i class="fa fa-dashboard fa-fw"></i> Home</a>
+      </li>
+      <li class="">
+        <a href="#"><i class="fa fa-edit fa-fw"></i> Faculty<span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse" style="height: 0px;">
+          <li>
+            <a href="<%= new_user_registration_path %>">Add Faculty</a>
+          </li>
+          <li>
+            <a href="/admin">All Faculties</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>

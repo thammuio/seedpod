@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h3 class="page-header" style="text-align: center;">
+      <span>Members of "<%= @team.name.capitalize %>" team</span>
+      <span class="pull-right" style = "margin-bottom: 15px;">
+        <% unless !user_signed_in? %>
+          <%= link_to 'Edit', edit_student_course_team_path(@student_course.slug, @team), :class => "btn btn-outline btn-primary btn-sm" %>
+          <%= link_to 'Back', student_course_teams_path(@student_course.slug), :class => "btn btn-outline btn-default btn-sm" %>
+        <% end %>
+      </span>
+    </h3>
+  </div>
+</div>
+
+<div class="row">
+  <% if @team_students.blank? %>
+    <h1 style="margin-left: 400px; margin-top: 10%;"><small>No member found!</small></h1>
+  <% else %>
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-9">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Student Name</th>
+                </tr>
+              </thead>
+              <% @team_students.each do |t| %>
+                <tbody>
+                  <tr>
+                    <td><%= t.email %></td>
+                    <td><%= t.student_name %></td>
+                  </tr>
+                </tbody>
+              <% end %>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

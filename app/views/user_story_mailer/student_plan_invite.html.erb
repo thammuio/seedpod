@@ -1,0 +1,30 @@
+Dear, <%= @plan_wise_student.student_name %>
+<br>
+
+You have been added to the course "<%= @student_course.course_name %>".
+<br>
+<br>
+<br>
+(More Details)
+<br>
+<br>
+<p>Your Plan is : <%= @plan.title %></p>
+<p>Your course name is : <%= @student_course.course_name %></p>
+<p>You are in Team : <%= @student_team.name %></p>
+
+<!-- <p>You are in Team : <%= @student_course.teams.name %></p> -->
+
+<br>
+<br>
+
+<p>Please click on the link below to login</p>
+
+<br>
+<%= student_login_url    %>
+
+<br>
+<br>
+<br>
+
+Sincerely,<br>
+Seedpod Team.

@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h4 class="page-header">Approved plans</h4>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+            <thead>
+              <tr>
+                <th style="width: 700px;">Plan Title</th>
+                <th>Status</th>
+                <th>No. of times resent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @approved_plans.each do |p| %>
+                <% p.plan_teams.each do |pt| %>
+                  <% if p.id == pt.plan_id && pt.team_id == @team.id && pt.status == "Approved" %>
+                  <%# if p.student_course_id == @student_course.id && pt.status == "Approved" %>
+                    <tr class="gradeA odd">
+                      <td class=" "><%= link_to p.title, view_filed_plan_path(@student_course, @team.slug, p.slug) %></td>
+                      <td class=" "><%= pt.status %></td>
+                      <td class=" "><%= pt.is_resent %> Times</td>
+                    </tr>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% content_for :admin_faculty do %>
+  <%= javascript_include_tag "jquery-1.10.2", "bootstrap", "jquery.metisMenu", "jquery.dataTables", "dataTables.bootstrap", "sb-admin", "bootstrap-switch.min", "jquery_ujs" %>
+<% end %>
+<script>
+  $(document).ready(function() {
+    $('#dataTables-example').dataTable();
+  });
+</script>

@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h4 class="page-header header_title">
+      <small><%= @student_course.course_id %> - <%= @student_course.course_name %>
+      <i class="fa fa-chevron-right"></i></small> Request Productivity Report
+      <small><%= link_to "View reports", student_course_productivity_reports_path(@student_course), :class => "pull-right btn btn-outline btn-primary btn-xs" %></small>
+    </h4>
+  </div>
+</div>
+<%= render 'form' %>

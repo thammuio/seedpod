@@ -1,0 +1,96 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require bootstrap.min
+ *= require font-awesome
+ *= require morris-0.4.3.min
+ *= require timeline
+ *= require dataTables.bootstrap
+ *= require sb-admin
+ *= require_tree .
+ */
+
+select, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"],
+input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"],
+input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input { 
+  height: 34px !important;
+}
+
+.error {
+  color: white;
+  border: 1px solid;
+  padding: 3px;
+  background: red;
+  font-size: 12px;
+  margin: 2px;
+}
+
+.dataTables_info, .dataTables_length > label {
+  margin-left: 15px;
+}
+
+.header_title {
+  margin-left: 15px;
+}
+
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+  /*vertical-align: baseline !important;*/
+  line-height: 1 !important;
+}
+.page-header {
+  margin: 15px 0 5px !important;
+}
+
+#seedpod_title:hover {
+  float: right;
+  font-size: 1.7em;
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  font-weight: bold;
+  line-height: 1;
+}
+.navbar-brand {
+  text-transform: uppercase;
+}
+.input-sm {
+  margin-left: 10px;
+}
+.table>tbody>tr>td {
+  padding: 5px !important;
+}
+.remove-padding {
+  margin-right: 0px !important;
+}
+
+.all_student>tbody>tr:nth-child(odd)>td{
+  background-color: #E6F8CE !important;
+}
+.defaul_panel_heading {
+  text-align: center;
+  text-transform: uppercase;
+}
+.table-hover>tbody>tr:hover>td {
+  background: #F6FAA3 !important;
+}
+.frozenstory > label {
+  text-decoration: underline;
+}
+
+table > tbody > tr.faculty_list > td {
+  vertical-align: middle !important;
+}
+
+::selection {
+  background: #24890d;
+  color: #fff;
+  text-shadow: none;
+}

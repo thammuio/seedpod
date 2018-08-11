@@ -1,0 +1,76 @@
+<div class="row cutom_row">
+  <div class="col-lg-12">
+    <h4 class="message" style="display: none;"><small>These students are already available in this course.</small></h4>
+    <div class="alert alert-danger exist_students" style="display: none;">
+    </div>
+  </div>
+</div>
+
+<%= form_for [@student_course, @student] ,:html => { :id => "student_form"} do |f| %>
+  <% if @student.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@student.errors.count, "error") %> prohibited this student from being saved:</h2>
+
+      <ul>
+      <% @student.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :email %><br>
+    <%= f.text_area :email, :class => "form-control", :placeholder => " ", :row => 3, :style => "height: 100px;", :required => true, :id => "email" %>
+  </div>
+
+  <div class="actions">
+    <% if params[:controller] == "students" && params[:action] == "new" %>
+      <%= f.submit 'Add Student', :class => 'btn btn-primary', :id => "student_create" %>
+    <% elsif params[:controller] == "students" && params[:action] == "edit" %>
+      <%= f.submit 'Update Student', :class => 'btn btn-primary', :id => "student_create" %>
+    <% end %>
+    <%= link_to 'Back', student_course_students_path(@student_course.slug), :class => 'btn btn-default'  %>
+  </div>
+<% end %>
+
+<br>
+<br>
+<%= render "students_already_available" %>
+<style type="text/css">
+  #email::-webkit-input-placeholder::before {
+    content: "Enter 'or' paste your emails here and separate them via comma(,).\000A e.g. xyz@gmail.com, abc@yahoo.com";
+  }
+</style>
+
+<script type="text/javascript">
+  $('#email').keyup(function(e){
+    var student_email = $(this).val();
+    var course_id = "<%= params[:student_course_id] %>";
+    
+    $.ajax({
+      url: '/check_student_exist_for_course',
+      type: 'POST',
+      data: { students_email: student_email,
+              course_id: course_id
+            }
+    })
+    .done(function(data) {
+      if(data != "0")
+      {
+        $(".exist_students").html(data).show();
+        $(".message").show();
+        $('#student_create').addClass('disabled');
+      }
+      else{
+        $(".exist_students").hide();
+        $(".message").hide();
+        $('#student_create').removeClass('disabled');
+      }
+    })
+    .fail(function() {
+      console.log("error");
+    });
+  });
+  $('.table tr:last').remove();
+</script>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Seedpod</title>
+      <%= stylesheet_link_tag "application", media: "all" %>
+      <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+      <%= csrf_meta_tags %>
+      <link rel="shortcut icon" href="/assets/favicon.png"/>
+  </head>
+  <body>
+    <div class="container">
+      <% if params[:controller] == "student_session" && params[:action] == "new" || params[:controller] == "student_session" && params[:action] == "create" %>
+        <div class="row">
+          <div class="col-lg-12">
+            <h1 class="page-header" style="text-align: center;"><small style="font-size: 35px;">Student Login</small></h1>
+          </div>
+        </div>
+      <% elsif params[:controller] == "sessions" && params[:action] == "new" || params[:controller] == "sessions" && params[:action] == "create" %>
+        <div class="row">
+          <div class="col-lg-12">
+            <h1 class="page-header" style="text-align: center;"><small style="font-size: 35px;">Faculty Login</small></h1>
+          </div>
+        </div>
+      <% end %>
+      <%= yield %>
+    </div>
+  </body>
+</html>

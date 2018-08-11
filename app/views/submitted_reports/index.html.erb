@@ -1,0 +1,31 @@
+<h1>Listing submitted_reports</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Productivity report</th>
+      <th>Student</th>
+      <th>Report updated by student</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @submitted_reports.each do |submitted_report| %>
+      <tr>
+        <td><%= submitted_report.productivity_report_id %></td>
+        <td><%= submitted_report.student_id %></td>
+        <td><%= submitted_report.report_updated_by_student %></td>
+        <td><%= link_to 'Show', submitted_report %></td>
+        <td><%= link_to 'Edit', edit_submitted_report_path(@course.course_name, @team.name, submitted_report) %></td>
+        <td><%= link_to 'Destroy', submitted_report, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Submitted report', new_submitted_report_path %>

@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h3 class="page-header"><small><%= @student_course.course_id %> - <%= @student_course.course_name %>
+      <i class="fa fa-chevron-right"></i> Approved / Filed Plan <i class="fa fa-chevron-right"></i></small> <%= @approved_plans.title %> <small> (Submitted by. <%= @team.name.capitalize %>)</small></h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-1">
+  </div>
+  <div class="col-lg-10">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Userstory</th>
+                <th>Task</th>
+                <th>Estimated Days</th>
+                <th>Userstory task estimate assigned to</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @approved_plans.plan_teams.each do |team| %>
+                <% @submitted_plan.each do |plan| %>
+                  <% if plan.plan_id == team.plan_id && team.status == "Approved" %>
+                    <% plan.submitted_plandetails.each do |pd| %>
+                      <tr>
+                        <td>
+                          <% uniq_filed_plan_userstory = [] %>
+                          <% uniq_filed_plan_userstory_slug = [] %>
+                          <% @filed_plan_userstory.each do |u| %>
+                            <% if u.parent_userstory_id == pd.userstory_id %>
+                              <% uniq_filed_plan_userstory << u.title %>
+                              <% uniq_filed_plan_userstory_slug << u.userstory_slug %>
+                            <% end %>
+                          <% end %>
+                          <% userstory_slug = uniq_filed_plan_userstory_slug.uniq.join("") %>
+                          <%= link_to uniq_filed_plan_userstory.uniq.join(""), view_filed_plan_userstory_path(@student_course, @team.slug, @filed_plan_detail.slug, userstory_slug) %>
+                        </td>
+                        <td>
+                          <% uniq_filed_plan_task = [] %>
+                          <% uniq_filed_plan_task_slug = [] %>
+                          <% @filed_plan_task.each do |t| %>
+                            <% if t.parent_task_id == pd.task_id %>
+                              <% uniq_filed_plan_task << t.title %>
+                              <% uniq_filed_plan_task_slug << t.taksslug %>
+                            <% end %>
+                          <% end %>
+                          <% task_slug = uniq_filed_plan_task_slug.uniq.join("") %>
+                          <%= link_to uniq_filed_plan_task.uniq.join(""), view_filed_plan_task_path(@student_course, @team.slug, @filed_plan_detail.slug, task_slug) %>
+                        </td>
+                        <td>
+                          <%= pd.estimated_time %>
+                        </td>
+                        <td>
+                          <% student = [] %>
+                          <% @plan.teams.each do |plan_team| %>
+                            <% plan_team.students.each do |team_students| %>
+                              <% if pd.userstory_task_estimate_assigned_to == team_students.id %>
+                                <% student << team_students.student_name %>
+                                <%#= team_students.student_name %>
+                              <% end %>
+                            <% end %>
+                          <% end %>
+                          <%= student.uniq.join('') %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

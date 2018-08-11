@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+    <div class="login-panel panel panel-default">
+      <!--
+        <div class="panel-heading">
+          <h3 class="panel-title" style="padding: 0px 0px;">Faculty Sign In</h3>
+        </div>
+      -->
+      <div class="panel-body">
+        <fieldset>
+          <%= form_for(resource, :as => resource_name, :url => session_path(resource_name),:html => { :id => "sign_in" } ) do |f| %>
+            <%= devise_error_messages! %>
+            <% unless resource.errors.empty? %>
+              <div>email not found</div>
+            <% end %>
+
+            <div class="form-group">
+              <label class="control-label visible-ie8 visible-ie9">Username 'Or' Email </label>
+              <%= f.text_field :login, :autofocus => true, :class => "form-control placeholder-no-fix", :placeholder => "Username 'or' Email", :required=> true %>
+              <%= resource.errors.messages[:login].join(" ") %>
+            </div>
+            <div class="form-group">
+              <label class="control-label visible-ie8 visible-ie9">Password</label>
+              <%= f.password_field :password, :class => "form-control placeholder-no-fix", :placeholder => "Password",:required => true, minlength: 7 %>
+              <%= resource.errors.messages[:password].join(" ") %>
+            </div>
+
+            <%= f.submit "Sign in", :class=>"btn btn-lg btn-success btn-block" %>
+          <% end %>
+        </fieldset>
+      </div>
+    </div>
+    <h3>
+      <small class="pull-left">Go back to  <a href="<%= root_url %>">Home</a></small>
+      <small class="pull-right">
+        <a href="<%= new_user_password_path %>" style="cursor: pointer;">
+          Forgot password?
+        </a>
+      </small>
+    </h3>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $("#sign_in").validate({
+    rules: {
+      password: {
+        required: true
+      }
+    }
+  });
+</script>

@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h3 class="page-header">Change profile setting page</h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-1">
+  </div>
+  <div class="col-md-6">
+    <%= form_for @student, :as=> :student, :url => student_profile_path ,:html => { :multipart => true, :id=> "profile" }  do |f| %>
+      <div class="form-group">
+        <%= f.label :email %> <br />
+        <%= f.text_field :email, :readonly => true, :class => "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :address %><br />
+        <%= f.text_area :address, :class => "form-control", :row => "3" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :mobile_no %><br />
+        <%= f.text_field :mobile_no, :class => "form-control" %>
+      </div>
+      <div class="action_container">
+        <%= f.submit "Update Profile", :class => 'btn btn-primary' %>
+        <%= link_to "Back", courses_path(current_student.student_name), :class => 'btn btn-default' %>
+      </div>
+    <% end %>
+  </div>
+</div>

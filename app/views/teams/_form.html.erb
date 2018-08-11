@@ -1,0 +1,76 @@
+<%= form_for [@student_course, @team], :html => { :id => "team" } do |f| %>
+  <div class="form-group">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, :class => "form-control", :required => true %>
+  </div>
+  <hr>
+
+  <% if @course_wise_students.blank? %>
+    <h2><small>No students are in course! <a href="<%= new_student_course_student_path(@student_course.id) %>"> Add students</a> </small></h2>
+  <% else %>
+    <h4 style="display: inline-flex;">
+      Add Students To Team
+      <div id="select_one_chk_box" style="margin-left: 30px;"></div>
+    </h4>
+    <br>
+    <div class="row cutom_row" style="margin-top: 15px;">
+      <div class="col-lg-5">
+        <div class="panel panel-primary">
+          <div class="panel-heading panel-title">
+            Student who are not in any team.
+          </div>
+          <div class="students">
+            <div>
+              <% @student_who_are_not_in_team.each do |student_who_are_not_in_team| %>
+                <% if student_who_are_not_in_team.blank? %>
+                  <p style="text-align: center;">No students found</p>
+                <% else %>
+                  <%= f.collection_check_boxes :student_ids, student_who_are_not_in_team, :id, :email do |b| %>
+                    <span style = "margin-left: 30px; display: flex; padding-left: 2px;">
+                      <%= b.check_box %>
+                      <%= b.label(:style => "padding-left: 10px; vertical-align: top;") %>
+                      <br>
+                    </span>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="panel panel-success">
+          <div class="panel-heading panel-title">
+            Students who are already involved in other team.
+          </div>
+          <div style="margin-top: 10px;">
+            <% if @student_who_are_in_team.blank? %>
+              <p style="text-align: center; font-style: italic; margin-top: 5px;">No students found</p>
+            <% else %>
+              <%= f.collection_check_boxes :student_ids, @student_who_are_in_team, :id, :email do |b| %>
+                <span style = "margin-left: 30px;">
+                  <%= b.check_box %>
+                  <%= b.label(:style => "vertical-align: top;") %>
+                  <br>
+                </span>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <br />
+  <br />
+
+  <div class="actions">
+    <% if params[:controller] == "teams" && params[:action] == "new" %>
+      <%= f.submit 'Create Team', :class => "btn btn-primary" %>
+    <% elsif params[:controller] == "teams" && params[:action] == "edit" %>
+      <%= f.submit 'Update Team', :class => "btn btn-primary" %>
+      <%= link_to 'Show', student_course_team_path(@student_course.id, @team), :class => "btn btn-default" %>
+    <% end %>
+    <%= link_to 'Back', student_course_teams_path(@student_course.id), :class => "btn btn-default" %>
+  </div>
+<% end %>

@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-lg-12">
+  </div>
+</div>
+
+<% if current_student.teams.blank? %>
+  <h2 style="margin-top: 28%; margin-left: 10%;">Currently you are not in any team. contact to your faculty.</h2>
+<% else %>
+  <div class="row">
+    <div class="col-lg-12">
+      <h3 class="page-header" style="text-align: center;">All Course</h3>
+    </div>
+  </div>
+  <div class="col-md-6 col-md-offset-3">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <% @student_cour.each do |sc| %>
+          <h4><u><%= sc.course_name %></u></h4>
+            <% sc.teams.each do |t| %>
+              <% t.students.each do |ts| %>
+                <% @course_students.each do |course_student| %>
+                  <% if current_student.id == ts.id %>
+                    <% if sc.id == course_student.student_course_id && course_student.student_id == ts.id %>
+                      <% if course_student.status == "Active" %>
+                        <ul><li class="fa fa-group"> <%= link_to t.name, student_course_team_path(sc, t) %></li><br /></ul>
+                      <% else %>
+                        <ul>
+                          <li class="fa fa-group"> <%= t.name %> <small>(Deactivated by faculty)</small></li><br />
+                        </ul>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<%= render "student_change_password_page_for_first_time" %>
+
+<script type="text/javascript">
+  <% if current_student.is_pwd_change == false %>
+    $(window).load(function(){
+      $('#ChangeStudentPwdModal').modal('show');
+    });
+  <% end %>
+</script>

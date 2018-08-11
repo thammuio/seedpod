@@ -1,0 +1,59 @@
+<%= form_for [@student_course, @productivity_report], :html => { :id => "request_report" } do |f| %>
+  <% if @productivity_report.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@productivity_report.errors.count, "error") %> prohibited this productivity_report from being saved:</h2>
+
+      <ul>
+      <% @productivity_report.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :title, "Report Title" %><br>
+    <%= f.text_field :title, :class=>"form-control", :placeholder => "Enter report title", :required => true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :description, "Report Description" %><br>
+    <%= f.text_area :description, :class => "form-control", :rows=>"3", :placeholder => "Enter report description", :required => true %>
+  </div>
+
+  <div>
+    <% if @report_wise_teams.blank? %>
+      <h2><small>No students are in course!</small></h2>
+    <% else %>
+      <div class="col-md-12" style="padding-left: 0px;">
+        <div class="panel panel-primary">
+          <div class="panel-heading" style="display: inline-flex; width: 100%;">
+            Select Team
+            <div id="select_one_chk_box" style="margin-left: 40px;"></div>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive" style = "display: flex;">
+              <%= f.collection_check_boxes :team_ids, @report_wise_teams , :id, :name do |t| %>
+                <span style="margin-left: 30px;">
+                  <%= t.check_box(:required => true) %>
+                  <%= t.label %>
+                  <br>
+                </span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <br />
+  <div class="actions">
+    <% if params[:controller] == "productivity_reports" && params[:action] == "new" %>
+      <%= f.submit "Submit Report", :class => "btn btn-primary" %>
+      <%= link_to 'Back', student_course_productivity_reports_path(@student_course.id), :class => "btn btn-default" %>
+    <% elsif params[:controller] == "productivity_reports" && params[:action] == "edit" %>
+      <%= f.submit "Update Report", :class => "btn btn-primary" %>
+      <%= link_to 'Back', student_course_productivity_reports_path(@student_course.id), :class => "btn btn-default" %>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h2 class="page-header"><%= @plan.title %></h2>
+  </div>
+</div>
+<h4>
+  <small>Reason to resend plan : </small>
+  <%= @submitted_plan.feedback_body.capitalize %>
+</h4>
+<%= form_for @submitted_plan,  url: :update_submitted_plan, :html => { :id => "submitted_plan_form" } do |f| %>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table" id="tb">
+              <thead>
+                <tr>
+                  <th style="width: 300px;">Userstory</th>
+                  <th style="width: 300px;">Task</th>
+                  <th style="width: 200px;">Estimation</th>
+                  <th style="width: 200px;">Userstory task estimate assigned to</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= f.fields_for :submitted_plandetails do |b| %>
+                  <%= render "submitted_plandetail_fields", :f => b %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= f.submit "Update Plan", :class => "btn btn-primary btn-sm" %>
+  <%= link_to_add_fields "Add More", f, :submitted_plandetails %>
+<% end %>
+
+<script type="text/javascript">
+  function add_fields(link, association, content) {
+    var new_id = new Date().getTime();
+    var regexp = new RegExp("new_" + association, "g");
+    $('table').append(content.replace(regexp, new_id));
+  }
+  function remove_fields(link) {
+    $(link).prev("input[type=hidden]").val("1");
+    $(link).closest('tr').hide();
+  }
+</script>

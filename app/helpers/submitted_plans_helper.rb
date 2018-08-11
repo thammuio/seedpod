@@ -1,0 +1,2 @@
+module SubmittedPlansHelper
+end

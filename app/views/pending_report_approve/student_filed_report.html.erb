@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h4 class="page-header">
+      <small><%= @student_course.course_id %> - <%= @student_course.course_name %>
+      <i class="fa fa-chevron-right"></i></small> Approved Reports
+    </h4>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+            <thead>
+              <tr>
+                <th style="width: 700px;">Report Title</th>
+                <th>Status</th>
+                <th>Resend</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @approved_reports.each do |p| %>
+                <% p.productivity_report_teams.each do |pt| %>
+                  <% if p.student_course.id == @student_course.id && pt.status == "Approved" %>
+                    <% @team_name = Team.find(pt.team_id) %>
+                    <tr class="gradeA odd">
+                      <td class=" "><%= link_to p.title, view_filed_report_path(@student_course, @team_name, p.slug) %></td>
+                      <td class=" "><%= pt.status %></td>
+                      <td class=" "><%= pt.is_resent %> Times</td>
+                    </tr>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% content_for :admin_faculty do %>
+  <%= javascript_include_tag "jquery-1.10.2", "bootstrap", "jquery.metisMenu", "jquery.dataTables", "dataTables.bootstrap", "sb-admin", "bootstrap-switch.min", "jquery_ujs" %>
+<% end %>
+<script>
+  $(document).ready(function() {
+    $('#dataTables-example').dataTable();
+  });
+</script>

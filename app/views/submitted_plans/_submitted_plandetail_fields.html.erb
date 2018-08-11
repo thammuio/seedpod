@@ -1,0 +1,78 @@
+<tr class="trr" id="task-<%= @s %>">
+  <div class="form-group">
+    <td style="width: 300px;">
+      <% if params[:controller] == "submitted_plans" && params[:action] == "new" %>
+        <%= f.select :userstory_id, @userstory.collect { |u| [u.title, u.id] }, { :include_blank => "Select Userstory" }, :class => "form-control us_select", :required => true %>
+      <% elsif params[:controller] == "submitted_plans" && params[:action] == "edit" %>
+        <%= f.select :userstory_id, @userstory.collect { |u| [u.title, u.id] }, { :include_blank => "Select Userstory" }, :class => "form-control us_select", :required => true %>
+      <% end %>
+    </td>
+  </div>
+  <div class="form-group">
+    <td style="width: 300px;">
+      <%= f.select :task_id, @tasks.collect{ |u| [u.title, u.id] }, { :include_blank => "Select Task" }, :class => "form-control task_list", :required => true %>
+    </td>
+  </div>
+  <td style="width: 200px;">
+    <div class="form-group input-group">
+      <%= f.text_field :estimated_time, :class => "form-control" %>
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" value=""><i class="fa">Days</i></button>
+      </span>
+    </div>
+  </td>
+  <div class="form-group">
+    <td style="width: 300px;">
+      <%= f.select :userstory_task_estimate_assigned_to, @team.students.collect{ |u| [u.student_name, u.id] }, { :include_blank => "Select Student" }, { :class => "form-control", :required => true } %>
+    </td>
+  </div>
+  <div class="form-group">
+    <td><span><%= link_to_remove_fields "Remove", f %></span></td>
+  </div>
+</tr>
+
+<script type="text/javascript">
+  $('.us_select').each(function(){
+    $('.us_select').on('change', function() {
+      var get_id = this.id;
+      var id_number = get_id.split("-");
+
+      var m = this.value;
+      var course_name = '<%= params[:id] %>';
+      var team_name = '<%= params[:name] %>';
+      var plan_title = '<%= params[:title] %>';
+      var url = '/course/' + course_name + '/teams/' + team_name + '/plan/' + plan_title + '/change_post';
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: { param_m: m, id_number: id_number },
+      });
+    });
+  });
+
+  var idName = 'task-';
+  var us = 'us-'
+  var tsk = 'tsk-'
+  $(function() {
+    $('tr').each(function(i) {
+      $(this).attr({ id: idName + i });
+    });
+
+    $('.us_select').each(function(i) {
+      $(this).attr({ id: us + i });
+    });
+
+    $('.task_list').each(function(i) {
+      $(this).attr({ id: tsk + i });
+      $(this).prop('disabled', 'true');
+      var getVal = $(this).find(":selected").val();
+      if(getVal == 0)
+      {
+        $(this).prop('disabled',true);
+      }
+      else {
+        $(this).prop('disabled',false);
+      }
+    });
+  });
+</script>

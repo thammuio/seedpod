@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h3 class="page-header">All Tasks
+    </h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+            <thead>
+              <tr>
+                <th>From Userstory</th>
+                <th>Task Title</th>
+                <th>Task Priority</th>
+                <th>Task Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @tasks.each do |task| %>
+                <tr class="gradeA odd">
+                  <td class="sorting_1"><%= task.userstory.title.capitalize %></td>
+                  <td class="sorting_1"><%= truncate(task.title, :length => 75) %></td>
+                  <td class="center "><%= task.priority %></td>
+                  <td>
+                    <%= link_to "View", task_path(@team.slug, @userstory.slug, task.slug) %>
+                    <%= link_to "Edit", edit_tasks_path(@team.slug, @userstory.slug, task.slug) %>
+                    <%= link_to 'Destroy', destroy_task_path(@team.slug, @userstory.slug, task.slug), method: :delete unless task.is_approved? %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% content_for :admin_faculty do %>
+  <%= javascript_include_tag "jquery-1.10.2", "bootstrap", "jquery.metisMenu", "jquery.dataTables", "dataTables.bootstrap", "sb-admin", "jquery_ujs" %>
+<% end %>
+<script>
+  $(document).ready(function() {
+    $('#dataTables-example').dataTable();
+  });
+</script>

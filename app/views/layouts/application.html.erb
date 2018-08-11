@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seedpod</title>
+    <%= stylesheet_link_tag "application", media: "all" %>
+    <% if content_for?(:admin_faculty) %>
+      <%= yield(:admin_faculty) %>
+    <% else %>
+      <%= javascript_include_tag "application" %>
+    <% end %>
+    <%= csrf_meta_tags %>
+    <link rel="shortcut icon" href="/assets/favicon.png"/>
+  </head>
+  <body>
+    <div id="wrapper">
+      <% if user_signed_in? %>
+        <%= render :partial => "/layouts/shared/top_header" %>
+        <% if current_user.is_admin? %>
+          <%= render :partial => "/layouts/shared/admin_sidebar"%>
+        <% else %>
+          <%= render :partial => "/layouts/shared/sidebar"%>
+        <% end %>
+        <div id="page-wrapper">
+          <%= yield %>
+        </div>
+      <% if user_signed_in? %>
+        <%= render :partial => "/layouts/shared/footer" %>
+      <% end %>
+    <% elsif current_student %>
+      <%= render :partial => "/layouts/shared/student_header" %>
+      <%= render :partial => "/layouts/shared/student_sidebar" %>
+      <div id="page-wrapper">
+        <%= yield %>
+      </div>
+    <% elsif session[:student_id].blank? %>
+      <%= render :partial => "/layouts/shared/student_header" %>
+      <div class="row">
+        <div class="col-lg-12">
+          <h1></h1>
+        </div>
+      </div>
+      <%= yield %>
+    <% else %>
+      <%= render :partial => "/layouts/shared/top_header" %>
+      <div class="row">
+        <div class="col-lg-12">
+          <h1></h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-1">
+        </div>
+        <div class="col-lg-10">
+          <div class="jumbotron">
+            <h1>Seedpod</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing.</p>
+              <center><p><a href="<%= new_user_session_path %>" class="btn btn-primary btn-lg" role="button">Login</a></p></center>
+          </div>
+        </div>
+        <div class="col-lg-1">
+        </div>
+      </div>
+    <% end %>
+    </div>
+    <% if notice %>
+      <script type="text/javascript">
+        $(function() {
+          var notice = '<%= notice %>';
+          $.bootstrapGrowl(notice);
+        });
+      </script>
+    <% elsif alert %>
+      <script type="text/javascript">
+        var alert = '<%= alert %>';
+        $.bootstrapGrowl(alert, {
+          ele: 'body', // which element to append to
+          type: 'danger', // (null, 'info', 'error', 'success')
+          offset: {from: 'top', amount: 20}, // 'top', or 'bottom'
+          align: 'right', // ('left', 'right', or 'center')
+          delay: 4000,
+          allow_dismiss: true,
+          stackup_spacing: 10 // spacing between consecutively stacked growls.
+        });
+      </script>
+    <% end %>
+  </body>
+</html>

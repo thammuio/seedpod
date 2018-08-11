@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h3 class="page-header">
+      <small><%= @course.course_id %> - <%= @course.course_name %> <i class="fa fa-chevron-right"></i>
+       </small><span> New Story</span>
+      <span class="pull-right"><%= link_to "View all stories", userstories_path, :class => "btn btn-outline btn-primary btn-sm" %></span>
+    </h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-2">
+          </div>
+          <div class="col-lg-8">
+            <%= form_for(@userstory, :html => { :id => "userstory_form" }) do |f| %>
+              <div class="form-group">
+                <label><%= f.label :title %></label>
+                <%= f.text_field :title, :class => "form-control", :placeholder => "Enter title", :required => true  %>
+                <%= @userstory.errors.messages[:title].join(" ") %>
+              </div>
+              <div class="form-group">
+                <label><%= f.label :description %></label>
+                <%= f.text_area :description, :class => "form-control", :rows => "3", :placeholder => "Enter description", :required => true  %>
+                <%= @userstory.errors.messages[:description].join(" ") %>
+              </div>
+              <div class="form-group">
+                <label><%= f.label :estimate %></label>
+                <%= f.select(:estimate, Userstory::UserstoryEstimate, { :include_blank=> "Select estimate days" }, { :class=>"form-control", :required => true }) %>
+                <%= @userstory.errors.messages[:estimate].join(" ") %>
+              </div>
+
+              <div class="form-group">
+                <label><%= f.label :status %></label>
+                <%= f.select(:status, Userstory::UserstoryStatus, { :include_blank=> "Select status" }, {:class=>"form-control", :required => true }) %>
+                <%= @userstory.errors.messages[:status].join(" ") %>
+              </div>
+              <div class="form-group">
+                <label><%= f.label :priority %></label>
+                <%= f.select(:priority, Userstory::UserstoryPriority, { :include_blank=> "Set priority" }, { :class=>"form-control" , :required => true }) %>
+                <%= @userstory.errors.messages[:priority].join(" ") %>
+              </div>
+              <%= f.submit 'Create Story', :class => "btn btn-primary" %>
+              <a href="<%= userstories_path %>" class="btn btn-default">Back</a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

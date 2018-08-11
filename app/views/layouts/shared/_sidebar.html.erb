@@ -1,0 +1,117 @@
+<% if user_signed_in? %>
+  <nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+      <ul class="nav" id="side-menu">
+        <% if params[:id].present? %>
+          <!--
+            <li class="sidebar-search">
+              <div class="input-group custom-search-form">
+              </div>
+            </li>
+          -->
+        <% end %>
+        <% if user_signed_in? %>
+          <li>
+            <a href="/faculty"><i class="fa fa-dashboard fa-fw"></i> Home</a>
+          </li>
+        <% elsif session[:student_id].blank? %>
+          <li>
+            <a href="/student"><i class="fa fa-dashboard fa-fw"></i> Home</a>
+          </li>
+        <% end %>
+        <% if user_signed_in? %>
+          <% if params[:controller] == "application" && params[:action] == "user" || faculty_add_course_header %>
+            <li class="">
+              <a href="#"><i class="fa fa-edit fa-fw"></i> Courses<span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level collapse" style="height: 0px;">
+                <li>
+                  <a href="<%= new_student_course_path %>"><i class="fa fa-plus fa-fw"></i> New Course</a>
+                </li>
+                <li>
+                    <a href="/faculty"><i class="fa fa-bars fa-fw"></i> All Courses</a>
+                </li>
+              </ul>
+              <!-- /.nav-second-level -->
+            </li>
+            <% elsif  params[:controller] == "users" && params[:action] == "edit" %>
+            <% elsif  params[:controller] == "users" && params[:action] == "edit_profile" %>
+            <% elsif  params[:controller] == "users" && params[:action] == "update_password" %>
+          <% else %>
+            <li class="">
+              <a href="#"><i class="fa fa-user fa-fw"></i> Student<span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level collapse" style="height: 0px;">
+                <li>
+                  <a href="<%= new_student_course_student_path(@student_course.slug) %>"><i class="fa fa-plus fa-fw"></i> Add Students</a>
+                </li>
+                <li>
+                  <a href="<%= student_course_students_path(@student_course.slug) %>"><i class="fa fa-bars fa-fw"></i> All Students team wise</a>
+                </li>
+                <li>
+                  <a href="<%= student_course_students_path(@student_course.slug) %>?all=students"><i class="fa fa-bars fa-fw"></i> All Students</a>
+                </li>
+                <!-- <li> -->
+                  <!-- <a href="<%#= student_course_students_path(@student_course.slug) %>"><i class="fa fa-bars fa-fw"></i> All Students</a> -->
+                <!-- </li> -->
+              </ul>
+              <!-- /.nav-second-level -->
+            </li>
+            <li class="">
+              <a href="#"><i class="fa fa-group fa-fw"></i> Team<span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level collapse" style="height: 0px;">
+                <li>
+                  <a href="<%= new_student_course_team_path(@student_course.slug) %>"><i class="fa fa-plus fa-fw"></i> Create Team</a>
+                </li>
+                <li>
+                  <a href="<%= student_course_teams_path(@student_course.slug) %>"><i class="fa fa-bars fa-fw"></i> All Teams</a>
+                </li>
+              </ul>
+              <!-- /.nav-second-level -->
+            </li>
+
+            <li class="">
+              <a href="#"><i class="fa fa-rocket fa-fw"></i> Plans<span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level collapse" style="height: 0px;">
+                <li>
+                  <a href="<%= new_student_course_plan_path(@student_course) %>"><i class="fa fa-hand-o-right fa-fw"></i> Request Plan</a>
+                </li>
+                <li>
+                  <a href="<%= faculty_pending_plans_to_approve_path(@student_course) %>"><i class="fa fa-retweet fa-fw"></i> Pending Plans to Approve </a>
+                </li>
+                <li>
+                  <a href="<%= faculty_filed_plan_path(@student_course.course_name) %>"><i class="fa fa-suitcase fa-fw"></i> Filled Plans </a>
+                </li>
+                <li>
+                  <a href="<%= student_course_plans_path(@student_course) %>"><i class="fa fa-bars fa-fw"></i> All Plans </a>
+                </li>
+              </ul>
+              <!-- /.nav-second-level -->
+            </li>
+
+            <li class="">
+              <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Request Productivity Report<span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level collapse" style="height: 0px;">
+                <li>
+                  <a href="<%= new_student_course_productivity_report_path(@student_course) %>"><i class="fa fa-hand-o-right fa-fw"></i> Request Productivity Report</a>
+                </li>
+                <li>
+                  <a href="<%= faculty_pending_reports_to_approve_path(@student_course) %>"><i class="fa fa-retweet fa-fw"></i> Pending Productivity Reports to Approve </a>
+                </li>
+                <li>
+                  <a href="<%= faculty_filed_report_path(@student_course.slug) %>"><i class="fa fa-suitcase fa-fw"></i> Filled Productivity Reports </a>
+                </li>
+                <li>
+                  <a href="<%= student_course_productivity_reports_path(@student_course) %>"><i class="fa fa-bars fa-fw"></i> All Productivity Reports </a>
+                </li>
+              </ul>
+              <!-- /.nav-second-level -->
+            </li>
+            <li>
+              <a href="<%= generate_report_path(@student_course.slug) %>">
+                <i class="fa fa-desktop fa-fw"></i> Report</a>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+<% end %>

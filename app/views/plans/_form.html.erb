@@ -1,0 +1,46 @@
+<%= form_for [@student_course, @plan], :html => { :id => "request_plan" } do |f| %>
+  <div class="form-group">
+    <%= f.label :title, "Plan Title" %><br>
+    <%= f.text_field :title, :class=>"form-control", :placeholder => "Enter plan title", :required => true %>
+    <p style="color: red;"><%= @plan.errors.messages[:title].join(",") %></p>
+  </div>
+  <div class="form-group">
+    <%= f.label :body, "Plan Desription" %><br>
+    <%= f.text_area :body, :class => "form-control", :rows=>"3", :placeholder => "Enter plan desription", :required => true %>
+  </div>
+  <br />
+  <div>
+    <% if @course_wise_teams.blank? %>
+      <h2><small>No students are in course!</small></h2>
+    <% else %>
+      <div class="col-md-12" style="padding-left: 0px;">
+        <div class="panel panel-primary">
+          <div class="panel-heading" style="display: inline-flex; width: 100%;">
+            Select Team
+            <div id="select_one_chk_box" style="margin-left: 40px;"></div>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive" style = "display: flex;">
+              <%= f.collection_check_boxes :team_ids, @course_wise_teams , :id, :name do |t| %>
+                <span style="margin-left: 30px;">
+                  <%= t.check_box(:required => true) %>
+                  <%= t.label %>
+                  <br>
+                </span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="actions">
+  <% if params[:controller] == "plans" && params[:action] == "new" %>
+    <%= f.submit 'Create Plan', :class => 'btn btn-primary' %>
+  <% elsif params[:controller] == "plans" && params[:action] == "edit" %>
+    <%= f.submit 'Update Plan', :class => 'btn btn-primary' %>
+  <% end %>
+    <%= link_to 'Back', student_course_plans_path(@student_course.id), :class => 'btn btn-default'  %>
+  </div>
+<% end %>

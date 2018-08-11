@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h3 class="page-header">
+      <small><%= @student_course.course_id %> - <%= @student_course.course_name %> <i class="fa fa-chevron-right"></i></small> Report </h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="report">
+      <div class="panel-body panel-acordation">
+        <div class="panel-group" id="accordion">
+          <% @teams.each do |team| %>
+            <% @filed_report_task =  FiledProductivityReportTask.find(:all, :conditions => { :team_id => team.id }) %>
+            <div class="panel panel-default">
+              <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#report-<%= team.id %>">
+                <h4 class="panel-title" style = "padding: 0px 0px;">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#report-<%= team.id %>" class="">
+                    Team : <%= team.name.capitalize %>
+                  </a>
+                </h4>
+              </div>
+              <div id="report-<%= team.id %>" class="panel-collapse collapse in" style="height: auto;">
+                <div class="panel-body">
+                  <div class="table-responsive table-bordered">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Student Name</th>
+                          <th style="text-align: center;">Days Worked</th>
+                          <th style="text-align: center;">Task completed</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% team.students.each do |team_student| %>
+                          <tr>
+                            <td><%= team_student.student_name %></td>
+                            <td style="text-align: center;">
+                              <% total_days_worked = [] %>
+                              <% @filed_report_task.each do |p| %>
+                                <% if p.userstory_task_assigned_to == team_student.id %>
+                                  <% total_days_worked << p.days_worked.to_i %>
+                                <% end %>
+                              <% end %>
+                              <%= total_days_worked.inject(:+) %>
+                            </td>
+                            <td style="text-align: center;">
+                              <% total_task = [] %>
+                              <% @filed_report_task.each do |p| %>
+                                <% if p.userstory_task_assigned_to == team_student.id && p.status == "Completed" %>
+                                  <% total_task << p.userstory_task_assigned_to %>
+                                <% end %>
+                              <% end %>
+                              <%= total_task.count %>
+                            </td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                      <tr>
+                        <th>Total time spent by team</th>
+                        <th style="text-align: center;">
+                          <% team_total_days_worked = [] %>
+                          <% @filed_report_task.each do |p| %>
+                            <% team_total_days_worked << p.days_worked.to_i %>
+                          <% end %>
+                          <%= team_total_days_worked.inject(:+) %>
+                        </th>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

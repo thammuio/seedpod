@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h2 class="page-header"><%= @plan.title %></h2>
+  </div>
+</div>
+
+<%= form_for @submitted_plan,  url: :create_submitted_plan, :html => { :id => "submitted_plan_form" } do |f| %>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table" id="tb">
+              <thead>
+                <tr>
+                  <th style="width: 300px;">Userstory</th>
+                  <th style="width: 300px;">Task</th>
+                  <th style="width: 200px;">Estimation</th>
+                  <th style="width: 200px;">Userstory task estimate assigned to</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= f.fields_for :submitted_plandetails do |b| %>
+                  <%= render "submitted_plandetail_fields", :f => b %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= f.submit "Submit Plan", :class => "btn btn-primary btn-sm", :id => "submit_plan" %>
+  <%= link_to_add_fields "Add More", f, :submitted_plandetails %>
+<% end %>

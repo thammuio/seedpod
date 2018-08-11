@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h4 class="page-header header_title">
+      <small><%= @student_course.course_id %> - <%= @student_course.course_name %></small>
+      <i class="fa fa-chevron-right"></i> Edit plan
+      <small><%= link_to "View plans", student_course_plans_path(@student_course.id), :class => "pull-right btn btn-outline btn-primary btn-xs" %></small>
+    </h4>
+  </div>
+</div>
+<h1></h1>
+
+<%= render 'form' %>

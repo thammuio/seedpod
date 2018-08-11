@@ -1,0 +1,9 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h4 class="page-header">
+      <i class="fa fa-hand-o-right"></i> New task
+      <%= link_to "All Tasks", tasks_path(@team, @userstory.slug), :class => "pull-right btn btn-outline btn-success btn-xs" %>
+    </h4>
+  </div>
+</div>
+<%= render 'form' %>

@@ -1,0 +1,57 @@
+<% if @users.blank? %>
+  <div class="row">
+    <div class="col-lg-12">
+    </div>
+  </div>
+  <h2 style="margin-top: 28%; margin-left: 40%;">No faculty found.</h2>
+<% else %>
+  <div class="row">
+    <div class="col-lg-12">
+      <h3 class="page-header">All Faculties</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Username</th>
+                  <th>Activated/Deactivated</th>
+                  <!-- <th>Toggle Switch</th> -->
+                  <!-- <th>CSS grade</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <% @users.each do |u| %>
+                  <tr class="gradeA odd faculty_list">
+                    <td class="sorting_1"><%= u.email %></td>
+                    <td class=" "><%= u.username %></td>
+                    <td>Click here to <%= link_to toggle_like_button(u) %></td>
+                    <!-- <td class="center "><input type="checkbox" checked data-size="small"></td> -->
+                    <!-- <td class="center ">A</td> -->
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<% content_for :admin_faculty do %>
+  <%= javascript_include_tag "jquery-1.10.2", "bootstrap", "jquery.metisMenu", "jquery.dataTables", "dataTables.bootstrap", "sb-admin", "bootstrap-switch.min", "jquery_ujs" %>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#dataTables-example').dataTable();
+  });
+  $(window).load(function(){
+    $('input:checkbox').bootstrapSwitch();
+  });
+</script>

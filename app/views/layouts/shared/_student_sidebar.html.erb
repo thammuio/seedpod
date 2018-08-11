@@ -1,0 +1,47 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+  <div class="sidebar-collapse">
+    <ul class="nav" id="side-menu">
+      <% if params[:course_name].present? %>
+        <li class="sidebar-search">
+          <%= params[:course_name] %>
+        </li>
+      <% end %>
+        <li>
+          <a href="<%= courses_path(current_student.student_name) %>"><i class="fa fa-dashboard fa-fw"></i> Home</a>
+        </li>
+        <% unless @team.blank? %>
+          <% @team.student_courses.each do |p| %>
+            <li>
+              <a href="<%= userstories_path(p, @team.slug) %>"><i class="fa fa-list-alt fa-fw"></i> Userstories</a>
+            </li>
+            <li class="">
+              <a href="#"><i class="fa fa-rocket fa-fw"></i> Plans<span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level collapse" style="height: 0px;">
+                <li>
+                  <a href="<%= student_pending_plans_path(p.slug, @team.slug) %>"><i class="fa fa-external-link-square fa-fw"></i> Pending Plans</a>
+                </li>
+                <li>
+                  <a href="<%= filed_plan_path(p.slug, @team.slug) %>"><i class="fa fa-thumbs-up fa-fw"></i> Filed Plans</a>
+                </li>
+              </ul>
+            </li>
+            <li class="">
+              <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Productivity Reports<span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level collapse" style="height: 0px;">
+                <li>
+                  <a href="<%= student_pending_report_path(p.slug, @team.slug) %>"><i class="fa fa-external-link-square fa-fw"></i> Pending Reports</a>
+                </li>
+                <li>
+                  <a href="<%= filed_report_path(p.slug, @team.slug) %>"><i class="fa fa-suitcase fa-fw"></i> Filed Productivity Reports</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="<%= student_report_path(p.slug, @team.slug) %>"><i class="fa fa-dashboard fa-fw"></i> Report</a>
+            </li>
+          <% end %>
+        <% end %>
+      <% if params[:controller] == "tasks" && params[:action] == "index" %>
+      <% end %>
+  </div>
+</nav>

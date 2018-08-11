@@ -1,0 +1,21 @@
+<div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="myModalLabel">Give your feedback to student</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_tag url_for(:controller => 'pending_report_approve', :action => 'resend'), :id => "feedback_form", :method => :post do %>
+          <div class="form-group">
+            <%= label_tag :feedback_body, "Feedback" %><br />
+            <%= text_area_tag :feedback_body, nil, :class => "form-control", :required => true %>
+          </div>
+          <div class="modal-footer">
+            <%= submit_tag 'Send to student', :class => 'btn btn-primary' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

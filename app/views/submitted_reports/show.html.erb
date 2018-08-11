@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Productivity report:</strong>
+  <%= @submitted_report.productivity_report_id %>
+</p>
+
+<p>
+  <strong>Student:</strong>
+  <%= @submitted_report.student_id %>
+</p>
+
+<p>
+  <strong>Report updated by student:</strong>
+  <%= @submitted_report.report_updated_by_student %>
+</p>
+
+<%= link_to 'Edit', edit_submitted_report_path(@submitted_report) %> |
+<%= link_to 'Back', submitted_reports_path %>

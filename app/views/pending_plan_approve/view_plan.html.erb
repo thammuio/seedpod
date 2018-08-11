@@ -1,0 +1,100 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h3 class="page-header"><small><%= @student_course.course_id %> - <%= @student_course.course_name %></small>
+      <i class="fa fa-hand-o-right"></i> <small> Pending plan to approve </small><i class="fa fa-hand-o-right"></i> <%= @waiting_to_approve.title %></h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-1">
+  </div>
+  <div class="col-lg-10">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Userstory</th>
+                <th>Task</th>
+                <th>Estimated Days</th>
+                <th>Userstory task estimate assigned to</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @waiting_to_approve.plan_teams.each do |team| %>
+                <% @submitted_plan.each do |plan| %>
+                  <% if plan.plan_id == team.plan_id && team.status == "Waiting" %>
+                    <% plan.submitted_plandetails.each do |pd| %>
+                      <tr>
+                        <td>
+                          <% @userstory.each do |u| %>
+                            <% if u.id == pd.userstory_id %>
+                              <%= link_to u.title, userstory_path(@student_course, @team, u) %>
+                            <% end %>
+                          <% end %>
+                        </td>
+                        <td>
+                          <% @tasks.each do |t| %>
+                            <% if t.id == pd.task_id %>
+                              <%= link_to t.title, task_path(@team, t.userstory.slug, t) + "?id=#{@student_course.slug}" %>
+                            <% end %>
+                          <% end %>
+                        </td>
+                        <td>
+                          <%= pd.estimated_time %>
+                        </td>
+                        <td>
+                          <% @plan.teams.each do |plan_team| %>
+                            <% plan_team.students.each do |team_students| %>
+                              <% if pd.userstory_task_estimate_assigned_to == team_students.id %>
+                                <%= team_students.student_name %>
+                              <% end %>
+                            <% end %>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-body">
+          <%= form_tag url_for(:controller => 'pending_plan_approve', :action => 'resend'), :id => "feedback_form", :method => :post do %>      
+            <div class="form-group">
+              <%= label_tag :feedback_body, "Feedback" %><br />
+              <%= text_area_tag :feedback_body, nil, :class => "form-control", :placeholder => "Say reson to student why you resending this plan." %>
+            </div>
+            <% @waiting_to_approve.plan_teams.each do |team| %>
+              <% if @team.id == team.team_id %>
+                <% unless team.status == "Approved" %>
+                  <div class="row">
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate" style=" margin-top: 15px;">
+                        <%= submit_tag 'Resend', :class => 'btn btn-danger' %>
+                        <!-- <a href="<%#= resend_pending_plan_path(@student_course.id, @plan.title) %>" class="btn btn-danger" style="margin-right: 15px;">Resend</a> -->
+                        <a href="<%= approve_pending_plan_path(@student_course, @team.slug, @plan.slug) %>" class="btn btn-success">Approve</a>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $("#everything").validate({
+    messages: {
+     dd1: {
+      required: "Please select",
+     },
+    }
+  });
+</script>

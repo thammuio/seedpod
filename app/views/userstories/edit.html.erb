@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h3 class="page-header">
+      <span>Edit Story</span>
+      <span class="pull-right"><%= link_to "View All", userstories_path %></span>
+    </h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-2">
+          </div>
+          <div class="col-lg-8">
+            <%= form_for(@userstory, :url => update_userstory_path) do |f| %>
+              <% if @userstory.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= pluralize(@userstory.errors.count, "error") %> prohibited this userstory from being saved:</h2>
+
+                  <ul>
+                  <% @userstory.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                  <% end %>
+                  </ul>
+                </div>
+              <% end %>
+
+              <div class="form-group">
+                <%= f.label :title %><br>
+                <%= f.text_field :title, :class => "form-control", :placeholder => "Enter title" %>
+              </div>
+              <div class="form-group">
+                <%= f.label :description %><br>
+                <%= f.text_area :description, :class => "form-control", :rows => "3", :placeholder => "Enter description" %>
+              </div>
+              <div class="form-group">
+                <label><%= f.label :estimate %></label>
+                <%= f.select(:estimate, Userstory::UserstoryEstimate, { :include_blank=> "Select estimate" }, {:class=>"form-control"}) %>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :priority %><br>
+                <%= f.select(:priority, Userstory::UserstoryPriority, { :include_blank=> "Set priority" }, {:class=>"form-control"}) %>
+              </div>
+              <div class="form-group">
+                <%= f.label :status %><br>
+                <%= f.select(:status, Userstory::UserstoryStatus, { :include_blank=> "Select status" }, {:class=>"form-control"}) %>
+              </div>
+              <div class="actions">
+                <%= f.submit 'Update Story', :class => "btn btn-primary" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
